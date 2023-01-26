@@ -1,11 +1,12 @@
 """
 CS3810: Principles of Database Systems
 Instructor: Thyago Mota
-Student: 
+Student: Matt Bacheldor
 Description: A simple FMS for projects
 """
 
 import os
+import pdb
 
 PRJ_FILE_NAME = "projects.csv"
 EMP_FILE_NAME = "employees.csv"
@@ -131,7 +132,18 @@ class ProjectCRUD(CRUD):
         * if the project is found, return it
         * else, return None
     """
-    def read(self, key) -> Project: 
+    def read(self, key) -> Project:
+
+        with open(os.path.join('db', PRJ_FILE_NAME), 'r') as file:
+            for line in file:
+                line = line.strip()
+                cols = line.split(',')
+                title, start, end, budget = line.split(',')
+                if title == key:
+                    project = Project(title, start, end, budget, "")
+                    file.close()
+                    return project
+            file.close()
         return None
 
     def delete(self, key) -> bool: 
@@ -165,6 +177,36 @@ class DB:
         * if the employee is not found, return None
     """
     def find_employee(id):
+
+        with open(os.path.join('db', 'Andromeda', EMP_FILE_NAME), 'r') as file:
+            print(id)
+            for line in file:
+                line = line.strip()
+                key, name, department = line.split(',')
+                if id == int(key):
+                    employee = Employee(key, name, department)
+                    file.close()
+                    return employee
+            file.close()
+        with open(os.path.join('db', 'Cassiopeia', EMP_FILE_NAME), 'r') as file:
+            for line in file:
+                line = line.strip()
+                key, name, department = line.split(',')
+                if id == int(key):
+                    employee = Employee(key, name, department)
+                    file.close()
+                    return employee
+            file.close()
+        with open(os.path.join('db', 'Orion', EMP_FILE_NAME), 'r') as file:
+            for line in file:
+                line = line.strip()
+                key, name, department = line.split(',')
+                if id == int(key):
+                    employee = Employee(key, name, department)
+                    file.close()
+                    return employee
+            file.close()
+
         return None
        
 def menu(): 
@@ -191,7 +233,7 @@ if __name__ == "__main__":
                 if line == "":
                     break
                 id = int(line)
-                if DB.find_employee(id): 
+                if DB.find_employee(id):
                     print('There is already an employee with id ' + str(id) + '!')
                 else:
                     name = input("name? ")
@@ -199,20 +241,20 @@ if __name__ == "__main__":
                     employee = Employee(id, name, department)
                     employees.append(employee)
             project = Project(title, start, end, budget, employees)
-            if prjCRUD.create(project): 
+            if prjCRUD.create(project):
                 print("New project successfully created!")
             else:
                 print("Fail to create a new project!")
         elif option == 2:
             title = input("title? ")
             project = prjCRUD.read(title)
-            if project: 
+            if project:
                 print(project)
                 for emp in project.employees:
                     print('\t' + str(emp))
             else:
                 print("Project not found!")
-        elif option == 3: 
+        elif option == 3:
             title = input("title? ")
             if prjCRUD.delete(title):
                 print("Project succcessfully deleted!")
