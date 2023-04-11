@@ -1,0 +1,44 @@
+erdiagram bank
+notation = crowsfoot
+
+entity Clients {
+    id key 
+    name
+
+}
+
+entity Loans {
+    number key
+    amount 
+    length 
+    rate 
+}
+
+entity CarLoans extends Loans{
+    model
+    year 
+}
+
+entity StudentLoans extends Loans {
+    institution
+}
+
+entity Mortgages extends Loans{
+    address 
+}
+
+weak entity Payments {
+    id partial-key
+    due_date
+    pay_amount 
+}
+
+relationship takes {
+    Clients[1]->Loans[0..N]
+}
+
+weak relationship generates {
+    Loans[1]->Payments[0..N]
+}
+
+

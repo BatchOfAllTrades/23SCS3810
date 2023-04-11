@@ -1,3 +1,4 @@
+
 # Introduction
 
 A container is a standardized software package that allows applications to run quickly and reliably in different computing environments​. A container packages up code and all its dependencies so applications can be easily deployed in different computer platforms. A container is created from a container image. A container engine runs containers​. Available for most popular platforms, containerized software will always run the same, regardless of the underlying infrastructure. 

@@ -1,6 +1,6 @@
 -- CS3810: Principles of Database Systems
 -- Instructor: Thyago Mota
--- Student: 
+-- Student: Matt Bacheldor
 -- Description: Star Wars Database (SQL Competition)
 
 CREATE DATABASE starwars;
@@ -156,15 +156,113 @@ INSERT INTO FilmRatings VALUES (6716,1,2), (6716,2,5), (29200,2,4), (29200,4,5),
 -- TODO: answer a minimum of 5 of the 7 questions below; you can get up to 7 points in this homework if you get ALL queries right
 
 -- h) the top rated star wars film by the fans 
+SELECT title AS "top rated by fans" FROM Films A
+NATURAL JOIN FilmRatings B 
+WHERE A.id = B.film
+ORDER BY B.rating LIMIT 1;
+
+-- CORRECT ABNSWER
+SELECT A.title AS "top rated by fans" FROM Films A 
+INNER JOIN FilmRatings B 
+ON A.id = B.film
+GROUP BY A.id 
+ORDER BY AVG(rating) DESC
+LIMIT 1;
 
 -- j) the top rated film by fans with income '$150,000+'
 
+-- CORRECT ANSWER
+SELECT A.title
+FROM Films A 
+INNER JOIN FilmRatings B
+ON A.id = B.film
+INNER JOIN Fans C 
+ON B.fan = C.id
+INNER JOIN IncomeLevels D 
+ON C.income = D.seq 
+WHERE D.description = '$150,000+'
+GROUP BY A.id
+ORDER BY AVG(rating) DESC 
+LIMIT 1;
+
 -- k) the number of ratings AND the average rating received by "Princess Leia", rounded to 2 decimals
+SELECT COUNT(*) AS "number of ratings",
+    AVG(rating)::NUMERIC(10,2) AS "average rating" FROM CharacterRatings
+    WHERE character = 2;
+
+-- CORRECT ANSWER
+SELECT COUNT(*) AS ratings, ROUND(AVG(A.rating), 2) AS avg_rating
+FROM CharacterRatings A 
+INNER JOIN Characters B 
+ON A.character = B.id
+WHERE B.name = 'Princess Leia';
 
 -- l) the average rating of "Star Wars: Episode V The Empire Strikes Back", rounded to 2 decimals
+SELECT AVG(rating)::NUMERIC(10,2) AS "average rating" FROM FilmRatings
+WHERE film = 5;
+
+-- CORRECT ANSWER
+SELECT ROUND(AVG(A.rating), 2) AS avg_strikes_back
+FROM FilmRatings A 
+INNER JOIN Films B 
+ON A.film = B.id
+WHERE film = 5;
 
 -- m) the name of the character that received the least number of ratings 
+SELECT name FROM Characters
+NATURAL JOIN (
+    SELECT COUNT(rating) FROM CharacterRatings
+) AS count
+ORDER BY count DESC LIMIT 1;
+
+-- CORRECT ANSWER
+SELECT A.name
+FROM Characters A 
+INNER JOIN CharacterRatings B 
+ON A.id = B.character
+GROUP BY A.id 
+ORDER BY COUNT(rating)
+LIMIT 1;
 
 -- n) the favorite character according the yongest fan audience
+SELECT name FROM Characters A
+NATURAL JOIN (
+    SELECT rating FROM CharacterRatings B 
+    NATURAL JOIN (
+        SELECT age FROM Fans C
+        NATURAL JOIN AgeGroups D
+        WHERE D.seq = 1
+    )AS age
+)AS rating
+GROUP BY name
+ORDER BY name LIMIT 1;
+
+-- CORRECT ANSWER
+SELECT A.name
+FROM Characters A 
+INNER JOIN CharacterRatings B 
+ON A.id = B.character
+INNER JOIN Fans C 
+ON B.fan = C.id 
+INNER JOIN AgeGroups D 
+ON C.age = D.seq 
+WHERER D> description = '18-29'
+GROUP BY A.id
+ORDER BY AVG(B.rating) DESC
+LIMIT 1;
 
 -- o) the income levels (descriptions) that has at least 100 fans, ordered by income sequential number
+SELECT description FROM IncomeLevels
+NATURAL JOIN (
+    SELECT COUNT(DISTINCT income) FROM Fans 
+) count WHERE count >= 100
+ORDER BY seq;
+
+-- CORRECT ANSWER
+SELECT description
+FROM IncomeLevels A 
+INNER JOIN Fans B 
+ON A.seq = B.income 
+GROUP BY A.seq
+HAVING COUNT(*) >= 100
+ORDER BY A.seq;

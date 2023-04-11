@@ -1,4 +1,25 @@
 CS3810: Principles of Database Systems
 Instructor: Thyago Mota
-Student: 
+Student: Matt Bacheldor
 Description: An Relational Schema for a Ticketing System
+
+Relations:
+Events (code*: string, title: string, season: string, year: int, venue_id: int)
+EventDays (event_code*: string, date*: Date, time*: Time)
+Venues (id*: int, name: string)
+Sectors (venue_id*: int, sector_number*: int, seats: int)
+SectorPrices (event_date*: Date, event_time*: Time, sector_number*: int, price: float)
+Seats (seat_number*: int, status: boolean, sector_number: int)
+Customers (email*: string, name: string, address: string, phone: int, credit_card: long)
+SeatPurchases (customer_email*: string, date*: Date, time*: Time, seat_number: int)
+
+
+Bonus:
+1. Events' := Equijoin Events E and EventDays ED
+                    E.code = ED.event_code and
+                    ED.date = '02/20/23' and
+                    E.title = 'The Entity Sets Ballet'
+2. Equijoin SectorPrices SP and Events' E'
+                    SP.event_date = E'.date and
+                    SP.event_time = E'.time
+

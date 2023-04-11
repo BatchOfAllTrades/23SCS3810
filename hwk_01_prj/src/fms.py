@@ -257,7 +257,7 @@ if __name__ == "__main__":
         elif option == 3:
             title = input("title? ")
             if prjCRUD.delete(title):
-                print("Project succcessfully deleted!")
+                print("Project successfully deleted!")
             else:
                 print("Fail to delete project!")
         elif option == 4:

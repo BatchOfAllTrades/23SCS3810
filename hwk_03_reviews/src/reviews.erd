@@ -1,19 +1,45 @@
 // CS3810: Principles of Database Systems
 // Instructor: Thyago Mota
-// Student: 
+// Student: Matt Bacheldor
 // Description: An ERD for a Paper Reviewing System
 
 erdiagram reviews
 notation=crowsfoot
 
-entity Papers  { 
-    
+entity Papers {
+    id key
+    title
+    abstract
+    file_name
 }
 
-entity Authors { 
-    
+entity Authors {
+    email key
+    first_name
+    last_name
 }
 
-entity Reviewers { 
-    
+entity Reviewers {
+    email key
+    first_name
+    last_name
+    phone
+    affiliation
+    interest
+}
+
+relationship reviews {
+    Papers[0..N] -> Reviewers[N]
+    technical_merit
+readability
+originality
+relavence
+recommendation
+author_feedback
+comment
+}
+
+relationship writes {
+    Authors[1..N] -> Papers[1..N]
+    contact_author
 }

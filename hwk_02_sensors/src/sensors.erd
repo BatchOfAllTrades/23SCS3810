@@ -1,15 +1,25 @@
 // CS3810: Principles of Database Systems
 // Instructor: Thyago Mota
-// Student: 
+// Student: Matt Bacheldor
 // Description: An ERD for Sensors
 
 erdiagram sensors
 notation=crowsfoot
 
 entity Sensors { }
-entity Types { }
+entity Types extends Sensors { }
 entity Manufacturers { }
 entity Measurements { }
-entity Readings { }
+weak entity Readings { }
 
+relationship built_by {
+    Sensors[0..N] -> Manufacturers[1..N]
+}
 
+relationship measures {
+    Sensors[N] -> Measurements[1..N]
+}
+
+weak relationship produces {
+    Measurements[N] -> Readings[0..N]
+}

@@ -1,0 +1,65 @@
+Example 3:
+Key {petID, visitDate, procCode}
+petID -> petName, petType, petAge, owner
+procCode -> procDesc
+{petID, visitDate, procCode} -> 
+
+Pets (petID*, petType, petAge, owner)
+Procedures (procCode*, procDesc)
+PetProcedures (petID*, visitDate*, procCode*)
+
+Example 4:
+1NF:
+Invoices (num, date, custName, custAddress, petName, description, amount)
+Split record into two tuples based on petName.
+
+2NF:
+Key {num, petName, description}
+num -> date, custName (2NF violation)
+
+InvoiceDetails (num*, petName*, description*, amount)
+Invoices (num*, date, custName, custAddress)
+
+3NF:
+custName -> custAddress (3NF violation)
+
+InvoiceDetails (num*, petName*, description*, amount)
+Invoices (num*, custName, date)
+Customers (custName*, custAddress)
+
+
+
+Improvement #1:
+Break description into code and description
+
+Key {num, petName, code}
+code -> description (2NF violation)
+
+After 2NF:
+InvoiceDetails (num*, petName*, description*, amount)
+Procedures (code*, description)
+Customers (custName*, custAddress)
+
+After 3NF:
+InvoiceDetails (num*, petName*, amount)
+Procedures (code*, description)
+Invoices (num*, custName, date)
+Customers (custName*, custAddress)
+
+Improvement #2:
+Add custEmail
+
+After 2NF:
+InvoiceDetails (num*, petName*, description*, amount)
+Procedures (code*, description)
+Customers (custName*, custAddress)
+
+custEmail -> custName, custAddress (3NF violation)
+
+After 3NF:
+InvoiceDetails (num*, petName*, amount)
+Procedures (code*, description)
+Invoices (num*, date, custEmail)
+Customers (custEmail, custName, custAddress)
+
+Exercise: how would your model change if you have invoice number unique to the pet?

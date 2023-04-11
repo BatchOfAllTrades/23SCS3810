@@ -1,0 +1,17 @@
+Relations:
+
+Customers (id*: serial, email: string, 
+        firstName: string, lastName: string, 
+        gender: char, address: string)
+
+Sales (saleNum*: serial, date: Date, 
+        pricePaid: currency, custId: serial)
+
+SaleItems (itemCode*: serial, saleNum*: serial)
+
+Items (itemCode*: serial, description: string, 
+        price: currency)
+
+Categories (catCode*: char(3), description: string)
+
+ItemCategories (catCode*: char(3), itemCode*: serial)

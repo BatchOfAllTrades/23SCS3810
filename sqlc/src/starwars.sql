@@ -1,6 +1,6 @@
 -- CS3810: Principles of Database Systems
 -- Instructor: Thyago Mota
--- Student(s): 
+-- Student(s): Matt Bacheldor, Miguel Salvador
 -- Description: Star Wars Database (SQL Competition)
 
 CREATE DATABASE starwars;
@@ -154,28 +154,59 @@ INSERT INTO FilmRatings VALUES (6716,1,2), (6716,2,5), (29200,2,4), (29200,4,5),
 (76634,1,4), (76634,2,2), (76634,3,3), (76634,4,2), (76634,5,3), (47673,1,4), (47673,2,2), (47673,3,4), (47673,4,1), (47673,5,4), (62217,1,2), (62217,3,1), (62217,4,1), (62217,5,5), (68276,1,2), (68276,2,3), (68276,3,1), (68276,4,5), (68276,5,3);
 
 -- a) the number of star wars films
+SELECT COUNT(*) AS total FROM Films;
 
 -- b) the age group (description) that has the most fans
+SELECT description
+FROM AgeGroups A
+INNER JOIN Fans B 
+ON A.seq = B.Age
+GROUP BY A.description
+ORDER BY COUNT(id) DESC 
+LIMIT 1;
 
 -- c) the education level (description) with the least number of fans
+SELECT description
+FROM EducationLevels A
+INNER JOIN Fans B 
+ON A.seq = B.Education
+GROUP BY A.description
+ORDER BY COUNT(id)
+LIMIT 1;
 
 -- d) the name of the star wars characters in alphabetical order
+SELECT name FROM Characters ORDER BY name;
 
 -- e) the star wars characters that have no fan ratings 
+SELECT character FROM CharacterRatings WHERE rating=NULL;
 
 -- f) the top 3 star wars characters based on fan ratings, showing their names and the average rating (rounded to 2 decimals) that they received 
 
+
+
 -- g) The ids of the fans that gave a rating of 1 for "Darth Vader", in ascending order, so that they be banned from future star wars views
+SELECT fan FROM CharacterRatings A
+WHERE A.character = 6 AND A.rating = 1
+ORDER BY fan;
 
 -- h) the top rated star wars film by the fans 
 
+
 -- j) the top rated film by fans with income '$150,000+'
 
+
 -- k) the number of ratings AND the average rating received by "Princess Leia", rounded to 2 decimals
+SELECT COUNT(*) as total,  AVG(rating)::NUMERIC(10,2) as average FROM CharacterRatings
+WHERE character = 2;
 
 -- l) the average rating of "Star Wars: Episode V The Empire Strikes Back", rounded to 2 decimals
+SELECT AVG(rating)::NUMERIC(10,2) as average FROM FilmRatings
+WHERE film = 5;
 
 -- m) the name of the character that received the least number of ratings 
+SELECT name, COUNT(rating) FROM CharacterRatings A GROUP BY name
+LEFT JOIN Characters B
+ON A.character = B.id;
 
 -- n) the favorite character according the yongest fan audience
 

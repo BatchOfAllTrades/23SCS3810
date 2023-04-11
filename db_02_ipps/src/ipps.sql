@@ -10,6 +10,47 @@ CREATE DATABASE ipps;
 \c ipps
 
 -- create tables
+CREATE TABLE providers (
+    Rndrng_Prvdr_CCN INT PRIMARY KEY NOT NULL,
+    Rndrng_Prvdr_Org_Name VARCHAR(100) NOT NULL,
+    Rndrng_Prvdr_St VARCHAR(80) NOT NULL,
+    Rndrng_Prvdr_City VARCHAR(40) NOT NULL,
+    Rndrng_Prvdr_State_Abrvtn CHAR(2) NOT NULL,
+    Rndrng_Prvdr_State_FIPS INT NOT NULL,
+    Rndrng_Prvdr_Zip5 INT NOT NULL,
+    Rndrng_Prvdr_RUCA INT NOT NULL
+)
+
+CREATE TABLE rucas (
+    Rndrng_Prvdr_RUCA INT PRIMARY KEY NOT NULL,
+    Rndrng_Prvdr_RUCA_Desc VARCHAR(150) NOT NULL,
+    FOREIGN KEY (Rndrng_Prvdr_RUCA) 
+        REFERENCES providers (Rndrng_Prvdr_RUCA)
+)
+
+CREATE TABLE drgs (
+    DRG_Cd INT PRIMARY KEY NOT NULL,
+    DRG_Desc VARCHAR(100) NOT NULL
+)
+
+CREATE TABLE drg_charges (
+    DRG_Cd INT NOT NULL,
+    Avg_Submtd_Cvrd_Chrg FLOAT NOT NULL,
+    PRIMARY KEY (DRG_Cd, Avg_Submtd_Cvrd_Chrg),
+    FOREIGN KEY (DRG_Cd) REFERENCES drgs (DRG_Cd)
+)
+
+CREATE TABLE provider_charges (
+    Avg_Submtd_Cvrd_Chrg FLOAT NOT NULL,
+    Rndrng_Prvdr_CCN INT NOT NULL,
+    Avg_Mdcr_Pymt_Amt FLOAT NOT NULL,
+    Avg_Mdcr_Pymt_Amt FLOAT NOT NULL,
+    Tot_Dschrgs INT NOT NULL,
+    PRIMARY KEY (Avg_Submtd_Cvrd_Chrg, Rndrng_Prvdr_CCN),
+    FOREIGN KEY (Avg_Submtd_Cvrd_Chrg) REFERENCES drg_charges (Avg_Submtd_Cvrd_Chrg),
+    FOREIGN KEY (Rndrng_Prvdr_CCN) REFERENCES providers (Rndrng_Prvdr_CCN)
+)
+
 
 -- create user with appropriate access to the tables
 
