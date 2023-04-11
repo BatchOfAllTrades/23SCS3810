@@ -1,0 +1,34 @@
+Providers (
+    Rndrng_Prvdr_CCN*, 
+    Rndrng_Prvdr_Org_Name,
+    Rndrng_Prvdr_St,
+    Rndrng_Prvdr_City,
+    Rndrng_Prvdr_State_FIPS,
+    Rndrng_Prvdr_State_Abrvtn
+    Rndrng_Prvdr_State_FIPS,
+    Rndrng_Prvdr_RUCA
+    )
+
+RUCAs (
+    Rndrng_Prvdr_RUCA*,
+    Rndrng_Prvdr_RUCA_Desc
+)
+
+DRGs (
+    DRG_Cd*,
+    DRG_Desc
+)
+
+DRGCharges (
+    DRG_Cd*,
+    Avg_Submtd_Cvrd_Chrg*
+)
+
+ProviderCharges (
+    Avg_Submtd_Cvrd_Chrg*,
+    Rndrng_Prvdr_CCN*,
+    Avg_Tot_Pymt_Amt,
+    Avg_Mdcr_Pymt_Amt,
+    Tot_Dschrgs
+)
+
