@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // open database 
 use blog;
 
@@ -56,14 +57,77 @@ db.posts.insertMany(
 db.posts.insert({
     author: "Bob"
 });
+=======
+db.posts.insertMany(
+    [
+        {
+            "author" : "Sam Mai Tai",
+            "created_at" : ISODate("2017-11-03T00:00:00Z"),
+            "content" : "The pessimist sees difficulty in every opportunity. The optimist sees the opportunity in every difficulty.",
+            "likes" : 12,
+            "tags" : [
+                "pessimist",
+                "optimist"
+            ]
+        },
+        
+        {
+            "author" : "Sam Mai Tai",
+            "created_at" : ISODate("2017-11-03T09:30:00Z"),
+            "content" : "Age is a case of mind over matter. If you don't mind, it doesn't matter.",
+            "likes" : 10,
+            "tags" : [
+                "age",
+                "optimist"
+            ]
+        },
+        
+        {
+            "author" : "Sam Mai Tai",
+            "created_at" : ISODate("2017-11-04T00:00:00Z"),
+            "content" : "Failure will never overtake me if my determination to succeed is strong enough.",
+            "likes" : 1,
+            "tags" : [
+                "optimist"
+            ]
+        },
+        
+        {
+            "author" : "Morbid Mojito",
+            "created_at" : ISODate("2017-11-04T00:00:00Z"),
+            "content" : "Only I can change my life. No one can do it for me.",
+            "tags" : [
+                "life"
+            ]
+        },
+        
+        {
+            "author" : "Morbid Mojito",
+            "created_at" : ISODate("2017-11-07T00:00:00Z"),
+            "content" : "Smile in the mirror. Do that every morning and you'll start to see a big difference in your life",
+            "likes" : 1,
+            "tags" : [
+                "life",
+                "optimist"
+            ]
+        }
+    ]
+
+)
+>>>>>>> 3d3e316 (hope this works)
 
 // list all posts 
 db.posts.find()
 
 // list all posts from 'Sam Mai Tai'
 db.posts.find(
+<<<<<<< HEAD
     {
         author: 'Sam Mai Tai'
+=======
+    { 
+        author: 'Sam Mai Tai'   
+>>>>>>> 3d3e316 (hope this works)
     }
 )
 
@@ -71,7 +135,11 @@ db.posts.find(
 db.posts.find(
     {
         author: 'Sam Mai Tai'
+<<<<<<< HEAD
     }, 
+=======
+    },
+>>>>>>> 3d3e316 (hope this works)
     {
         _id: 0,
         content: 1
@@ -97,8 +165,13 @@ db.posts.find(
 // list all posts from 'Morbid Mojito' that had less than 3 likes 
 db.posts.find(
     {
+<<<<<<< HEAD
         author: 'Morbid Mojito',
         likes: {
+=======
+        author : 'Morbid Mojito',
+        likes : {
+>>>>>>> 3d3e316 (hope this works)
             $lt: 3
         }
     }
@@ -107,6 +180,7 @@ db.posts.find(
 // list all posts from 'Morbid Mojito' that had less than 3 likes or didn't have any likes at all 
 db.posts.find(
     {
+<<<<<<< HEAD
         author: 'Morbid Mojito',
         $or: [
             {
@@ -114,6 +188,19 @@ db.posts.find(
             },
             {
                 likes: { $exists: false }
+=======
+        author : "Morbid Mojito",
+        $or : [
+            {
+                likes : {
+                $lt : 3
+                }
+            }, 
+            {
+                likes : {
+                    $exists: false
+                }
+>>>>>>> 3d3e316 (hope this works)
             }
         ]
     }
@@ -149,7 +236,10 @@ db.posts.find(
 
 // list all posts that have the tags 'optimist' and 'life' 
 // hint: you might want to try the $all query operator or just use the $and query operator 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3d3e316 (hope this works)
 db.posts.find(
     {
         tags: {
@@ -163,8 +253,13 @@ db.posts.find(
 db.posts.find(
     {
         $or: [
+<<<<<<< HEAD
             { tags: 'optimist' }, 
             { tags: 'life' } 
+=======
+            {tags: 'optimist'},
+            {tags: 'life'}
+>>>>>>> 3d3e316 (hope this works)
         ]
     }
 )
@@ -174,7 +269,13 @@ db.posts.find(
 db.posts.find(
     {
         tags: {
+<<<<<<< HEAD
             $nin: ['age']
+=======
+            $nin: [
+                'age'
+            ]
+>>>>>>> 3d3e316 (hope this works)
         }
     }
 )
