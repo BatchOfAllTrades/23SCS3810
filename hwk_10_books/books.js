@@ -61,4 +61,4 @@ db.books.insertOne({
 
 // list all books that have more than 100 pages but less than 500 pages
 
-// bonus: list the average number of pages of books per gender 
+// bonus: list the average number of pages of books per genre 
